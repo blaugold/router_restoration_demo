@@ -14,7 +14,7 @@ class AppTheme {
 
   static final _textButtonTheme = TextButtonThemeData(
     style: TextButton.styleFrom(
-      // On desktop the default vertical padding is canceled out by 
+      // On desktop the default vertical padding is canceled out by
       // `VisualDensity.compact`. We double the vertical padding, everywhere.
       padding: EdgeInsets.symmetric(
         vertical: 8,
