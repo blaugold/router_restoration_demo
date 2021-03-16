@@ -242,3 +242,47 @@ class RestorableAppRouting extends RestorableProperty<AppRouting> {
   @override
   Object? toPrimitives() => appRouting.toRouteInformation().location;
 }
+
+/// Widget which manages the restoration of an [AppRouting] instance.
+class AppRoutingRestoration extends StatefulWidget {
+  const AppRoutingRestoration({
+    Key? key,
+    required this.appRouting,
+    required this.child,
+    this.restorationId,
+  }) : super(key: key);
+
+  final AppRouting appRouting;
+
+  final Widget child;
+
+  final String? restorationId;
+
+  @override
+  _AppRoutingRestorationState createState() => _AppRoutingRestorationState();
+}
+
+class _AppRoutingRestorationState extends State<AppRoutingRestoration>
+    with RestorationMixin {
+  late final restorableAppRouting = RestorableAppRouting(widget.appRouting);
+
+  @override
+  String? get restorationId => widget.restorationId;
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(restorableAppRouting, 'appRouting');
+  }
+
+  @override
+  void didUpdateWidget(covariant AppRoutingRestoration oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    assert(
+      identical(widget.appRouting, oldWidget.appRouting),
+      'appRouting must always be the same instance',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
+}

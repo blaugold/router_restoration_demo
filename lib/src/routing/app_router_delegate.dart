@@ -46,11 +46,11 @@ class AppRouterDelegate extends RouterDelegate<AppRouting>
         restorationScopeId: 'rootNavigator',
         pages: appRouting.buildPages(context),
         onPopPage: (route, dynamic result) {
-          if (route.didPop(result)) {
-            return appRouting.popPage();
+          if (!route.didPop(result)) {
+            return false;
           }
 
-          return false;
+          return appRouting.popPage();
         },
       );
 }
