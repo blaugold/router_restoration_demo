@@ -43,6 +43,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouting>
 
   @override
   Widget build(BuildContext context) => Navigator(
+        restorationScopeId: 'rootNavigator',
         pages: appRouting.buildPages(context),
         onPopPage: (route, dynamic result) {
           if (route.didPop(result)) {

@@ -105,19 +105,22 @@ class AppRouting extends ChangeNotifier {
   /// Builds the apps [Page]s according to the current routing state.
   List<Page> buildPages(BuildContext context) {
     final pages = <Page>[
-      MaterialPage<void>(
+      RestorableMaterialPage<void>(
+        restorationId: 'home',
         child: HomePage(),
       ),
     ];
 
     switch (selectedContent) {
       case SelectedContent.photos:
-        pages.add(MaterialPage<void>(
+        pages.add(RestorableMaterialPage<void>(
+          restorationId: 'photos',
           child: PhotosPage(),
         ));
         break;
       case SelectedContent.messages:
-        pages.add(MaterialPage<void>(
+        pages.add(RestorableMaterialPage<void>(
+          restorationId: 'messages',
           child: MessagesPage(),
         ));
         break;
@@ -185,6 +188,29 @@ class AppRouting extends ChangeNotifier {
       location: location,
     );
   }
+}
+
+/// An extension of [MaterialPage] which exposes the [restorationId] field.
+class RestorableMaterialPage<T> extends MaterialPage<T> {
+  RestorableMaterialPage({
+    required Widget child,
+    bool maintainState = true,
+    bool fullscreenDialog = false,
+    LocalKey? key,
+    String? name,
+    Object? arguments,
+    this.restorationId,
+  }) : super(
+          child: child,
+          maintainState: maintainState,
+          fullscreenDialog: fullscreenDialog,
+          key: key,
+          name: name,
+          arguments: arguments,
+        );
+
+  @override
+  final String? restorationId;
 }
 
 /// A [RestorableProperty] which makes an [AppRouting] instance restorable.
