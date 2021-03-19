@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,8 +29,15 @@ class AppTheme {
     systemOverlayStyle: SystemUiOverlayStyle.light,
   );
 
+  static final _pageTransitionTheme = PageTransitionsTheme(
+    builders: TargetPlatform.values
+        .map((e) => MapEntry(e, FadeThroughPageTransitionsBuilder()))
+        .let((it) => Map.fromEntries(it)),
+  );
+
   static ThemeData _customizeTheme(ThemeData theme) => theme.copyWith(
         appBarTheme: _appBarTheme,
         textButtonTheme: _textButtonTheme,
+        pageTransitionsTheme: _pageTransitionTheme,
       );
 }

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/link.dart';
@@ -26,7 +27,19 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: body,
+      body: PageTransitionSwitcher(
+        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+          return FadeThroughTransition(
+            animation: primaryAnimation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          );
+        },
+        child: KeyedSubtree(
+          key: ValueKey(appRouting.mainNavigation),
+          child: body,
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: MainNavigation.values.indexOf(appRouting.mainNavigation),
         onTap: (index) =>
